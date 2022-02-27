@@ -16,7 +16,7 @@ public class Shop {
         promotionList.add(promotion);
     }
 
-    public void addItem(Item item) {
+    public void addItemToCart(Item item) {
         CartItem cartItem = cart.getCartItem(item.getName());
         if (cartItem == null) {
             cartItem = new CartItem();
@@ -48,7 +48,8 @@ public class Shop {
         Double price = Double.valueOf(0);
         finalPrice.add(price);
         cart.getBusket().forEach((k, v) -> {
-            finalPrice.set(0, finalPrice.get(0) + v.getFinalPrice());
+            Double price2 = finalPrice.get(0) + v.getPrice() ;
+            finalPrice.set(0, price2);
         });
 
         return finalPrice.get(0);

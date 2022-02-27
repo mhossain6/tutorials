@@ -30,7 +30,7 @@ public class SetPromotion extends Promotion {
             return cart;
         }
 
-        Double price = (discItem.getQuantity() * discItem.getPrice() * discountRate) / 100.0;
+        Double price = (discItem.getQuantity() * discItem.getItem().getPrice() * discountRate) / 100.0;
         discItem.setFinalPrice(price);
 
         return cart;

@@ -9,6 +9,8 @@ public class CartItem {
     Double finalPrice;
 
     public Double getPrice() {
+        if (null == finalPrice)
+            return item.getPrice() * quantity;
       return  finalPrice;
     }
 }
