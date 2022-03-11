@@ -2,6 +2,7 @@ package com.example.rest.repository;
 
 import com.example.rest.model.Car;
 import com.example.rest.model.CarInventory;
+import com.example.rest.model.UUIDGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -16,7 +17,7 @@ public class InventoryRepository {
     Map<String, CarInventory> inventoryMap = new HashMap<>();
 
     public String getId() {
-        return "1";
+        return UUIDGenerator.getUuid();
     }
 
     public List<CarInventory> getInventory() {

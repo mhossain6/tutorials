@@ -2,8 +2,8 @@ package com.example.rest.repository;
 
 import com.example.rest.model.Car;
 import com.example.rest.model.CarInventory;
+import com.example.rest.model.UUIDGenerator;
 import org.springframework.stereotype.Component;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +12,7 @@ public class CartRepository {
     Map<String, CarInventory> inventoryMap = new HashMap<>();
 
     public String getId() {
-        return "1";
+        return UUIDGenerator.getUuid();
     }
 
     public CarInventory findCar(String id) {
