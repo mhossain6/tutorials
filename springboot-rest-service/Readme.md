@@ -1,3 +1,3 @@
 Example :
 
-REST client application using HTTPClient 
+REST application using springboot
