@@ -1,4 +1,4 @@
-package com.example.rest.model;
+package com.example.rest.login.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
