@@ -39,7 +39,7 @@ public class AdminController {
         return carController.getCars();
     }
 
-    @PostMapping(value = "/addCar")
+    @PostMapping(value = "/addCar/")
     public Car addCar(@RequestBody(required = true) Car inCar,
                       final HttpServletRequest request) {
         logger.info("in adminActions/addCar/");
@@ -47,7 +47,7 @@ public class AdminController {
         return carController.putCar(inCar);
     }
 
-    @PostMapping(value = "/delCar")
+    @PostMapping(value = "/delCar/")
     public Car deleteCar(@RequestBody(required = true) Car car,
                          final HttpServletRequest request) {
         logger.info("in adminActions/delCar/");
@@ -55,7 +55,7 @@ public class AdminController {
         return carController.deleteCar(car);
     }
 
-    @PostMapping(value = "/addCarToInventory")
+    @PostMapping(value = "/addCarToInventory/")
     public Car addCarToInventory(@RequestBody(required = true) Car inCar,
                                  final HttpServletRequest request) {
         logger.info("in adminActions/addCarToInventory/");
@@ -63,7 +63,7 @@ public class AdminController {
         return inventoryController.addToInventory(inCar);
     }
 
-    @PostMapping(value = "/delCarFromInventory")
+    @PostMapping(value = "/delCarFromInventory/")
     public CarInventory delCarFromInventory(@RequestBody(required = true) CarInventory inCar,
                                             final HttpServletRequest request) {
         logger.info("in adminActions/delCarFromInventory/");

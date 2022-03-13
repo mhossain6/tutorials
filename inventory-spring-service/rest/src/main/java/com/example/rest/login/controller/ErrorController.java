@@ -18,13 +18,14 @@ public class ErrorController {
     @GetMapping(value = "/")
     public ModelAndView homepage(final HttpServletRequest request, final ModelMap model) {
 
-        return new ModelAndView("homepage", model);
+        return new ModelAndView("index", model);
     }
 
     @GetMapping(value = "/invalidSession")
     public String invalidSession() {
         return "invalidSession";
     }
+
     @GetMapping(value = "/accessDenied")
     public String accessDenied() {
         return "accessDenied";

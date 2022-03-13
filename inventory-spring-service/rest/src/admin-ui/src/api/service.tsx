@@ -1,13 +1,36 @@
 import axios from "axios";
 import { Car, CarInventory } from "../model/models";
 
-const ADMIN_URL="/api/v1/adminActions";
-const GET_INVENTORY="/listInventory/";
-const GET_CARS="/listCars/";
-const ADD_CAR="/addCar/";
-const DEL_CAR="/delCar/";
-const ADD_INVENTORY="/addCarToInventory/";
-const DEL_INVENTORY="/delCarFromInventory/";
+const ADMIN_URL = "/api/v1/adminActions";
+const GET_INVENTORY = "/listInventory/";
+const GET_CARS = "/listCars/";
+const ADD_CAR = "/addCar/";
+const DEL_CAR = "/delCar/";
+const ADD_INVENTORY = "/addCarToInventory/";
+const DEL_INVENTORY = "/delCarFromInventory/";
+const GET_USER_ROLE = "/getSessionRole/";
+
+
+export const getUserRole = (serviceUrl: string): Promise<string> => {
+  console.log("in get cars api call");
+
+  return axios
+    .get<string>(`${serviceUrl}${GET_USER_ROLE}`, {
+      headers: {
+        Accept: "application/json",
+      },
+    })
+    .then((response) => {
+      console.log("returned response ");
+      return response.data;
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+      return "";
+    });
+};
+
 
 export const getCars = (serviceUrl: string): Promise<any[]> => {
   console.log("in get cars api call");
@@ -15,7 +38,7 @@ export const getCars = (serviceUrl: string): Promise<any[]> => {
   return axios
     .get<any[]>(`${serviceUrl}${ADMIN_URL}${GET_CARS}`, {
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
       },
     })
     .then((response) => {
@@ -53,9 +76,8 @@ export const deleteCar = (serviceUrl: string, car: Car): Promise<any[]> => {
   console.log("in delete car api call", car);
 
   return axios
-    .delete<any[]>(`${serviceUrl}${ADMIN_URL}${DEL_CAR}` + car, {
-      headers: {
-      },
+    .post<any[]>(`${serviceUrl}${ADMIN_URL}${DEL_CAR}`, car, {
+      headers: {},
     })
     .then((response) => {
       console.log("returned response ", response.data);
@@ -68,14 +90,13 @@ export const deleteCar = (serviceUrl: string, car: Car): Promise<any[]> => {
     });
 };
 
-
 export const getCarInventory = (serviceUrl: string): Promise<any[]> => {
   console.log("in getCarInventory api call");
 
   return axios
     .get<any[]>(`${serviceUrl}${ADMIN_URL}${GET_INVENTORY}`, {
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
       },
     })
     .then((response) => {
@@ -89,7 +110,10 @@ export const getCarInventory = (serviceUrl: string): Promise<any[]> => {
     });
 };
 
-export const addCarInventory = (serviceUrl: string, carinventory: CarInventory): Promise<any[]> => {
+export const addCarInventory = (
+  serviceUrl: string,
+  carinventory: Car 
+): Promise<any[]> => {
   console.log("in add inventory api call", carinventory);
 
   return axios
@@ -109,13 +133,15 @@ export const addCarInventory = (serviceUrl: string, carinventory: CarInventory):
     });
 };
 
-export const deleteCarInventory = (serviceUrl: string, inventory: CarInventory): Promise<any[]> => {
+export const deleteCarInventory = (
+  serviceUrl: string,
+  inventory: CarInventory
+): Promise<any[]> => {
   console.log("in delete inventory api call", inventory);
 
   return axios
-    .post<any[]>(`${serviceUrl}${ADMIN_URL}${DEL_INVENTORY}` ,inventory, {
-      headers: {
-      },
+    .post<any[]>(`${serviceUrl}${ADMIN_URL}${DEL_INVENTORY}`, inventory, {
+      headers: {},
     })
     .then((response) => {
       console.log("returned response ", response.data);

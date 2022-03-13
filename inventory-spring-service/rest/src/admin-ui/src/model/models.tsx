@@ -9,6 +9,6 @@ export class Car {
 
 export class CarInventory {
   id: string;
-  car: Car;
+  inventoryObject: Car;
   constructor() {}
 }

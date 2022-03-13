@@ -2,6 +2,7 @@ package com.example.rest.service;
 
 import com.example.rest.model.Car;
 import com.example.rest.model.CarInventory;
+import com.example.rest.model.UUIDGenerator;
 import com.example.rest.repository.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,9 @@ public class InventoryService {
     }
 
     public Car addToInventory(Car car) {
-        return null;
+        if (car.getId() == null) car.setId(UUIDGenerator.getUuid());
+        return inventoryRepository.addCar(car);
+
     }
 
     public CarInventory getCarInventory(String inventoryId) {

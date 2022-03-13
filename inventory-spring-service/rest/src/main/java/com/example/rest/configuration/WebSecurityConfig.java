@@ -59,9 +59,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().userDetailsService(userDetailsService)
                 .authorizeRequests()
-                .antMatchers("/api/v1/adminActions/**").hasAuthority("ADMIN")
-                .antMatchers("/api/v1/buyerActions/**").hasAuthority("USER")
-                .antMatchers("/login*", "/logout*").permitAll()
+                .antMatchers("/api/v1/adminActions/**","/scripts/**").hasAuthority("ADMIN")
+                .antMatchers("/api/v1/buyerActions/**", "/api/v1/buyerActions/addItemToCart**", "/api/v1/buyerActions/removeCartItem/**","/scripts/**").hasAuthority("USER")
+                .antMatchers("/login*", "/logout*", "/getSessionRole*","/scripts/**").permitAll()
                 .antMatchers("/invalidSession*").anonymous()
                 .anyRequest().authenticated()
                 .and()
@@ -91,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity webSecurity) {
-        webSecurity.ignoring().antMatchers("/actuators/**");
+        webSecurity.ignoring().antMatchers("/actuators/**", "/scripts/**");
     }
 
     @Bean

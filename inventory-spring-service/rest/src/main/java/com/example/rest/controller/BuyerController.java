@@ -25,7 +25,7 @@ public class BuyerController {
     @Autowired
     CartService cartService;
 
-    @GetMapping(value = "/listInventory")
+    @GetMapping(value = "/listInventory/")
     public List<CarInventory> getInventory(
             final HttpServletRequest request) {
         logger.info("in userActions/listInventory/");
@@ -33,7 +33,7 @@ public class BuyerController {
         return inventoryController.getInventory();
     }
 
-    @GetMapping(value = "/listCartItems")
+    @GetMapping(value = "/listCartItems/")
     public List<CarInventory> listCartItems(
             final HttpServletRequest request) {
         logger.info("in userActions/listCartItems/");
@@ -41,7 +41,7 @@ public class BuyerController {
         return cartService.getCartItems();
     }
 
-    @GetMapping(value = "/removeCartItem/{inventoryId}")
+    @GetMapping(value = "/removeCartItem")
     public List<CarInventory> removeCartItem(@RequestParam("inventoryId") String inventoryId,
                                              final HttpServletRequest request) {
         logger.info("in userActions/removeCartItem/");
@@ -49,7 +49,7 @@ public class BuyerController {
         return cartService.removeCartItem(inventoryId);
     }
 
-    @GetMapping(value = "/addItemToCart/{inventoryId}")
+    @GetMapping(value = "/addItemToCart")
     public List<CarInventory> addItemToCart(@RequestParam("inventoryId") String inventoryId,
                                             final HttpServletRequest request) {
         logger.info("in userActions/addItemToCart/");
@@ -57,7 +57,7 @@ public class BuyerController {
         return cartService.putItemIntoCart(inventoryId);
     }
 
-    @GetMapping(value = "/checkout")
+    @GetMapping(value = "/checkout/")
     public void checkout(
             final HttpServletRequest request) {
         logger.info("in userActions/checkout/");

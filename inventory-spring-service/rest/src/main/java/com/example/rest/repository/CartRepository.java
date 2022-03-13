@@ -5,15 +5,15 @@ import com.example.rest.model.CarInventory;
 import com.example.rest.model.UUIDGenerator;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Component
 public class CartRepository {
 
-    Map<String, CarInventory> inventoryMap = new HashMap<>();
+    Map<String, CarInventory> inventoryMap = new ConcurrentHashMap<>();
 
     public String getId() {
         return UUIDGenerator.getUuid();
@@ -31,7 +31,7 @@ public class CartRepository {
     public Car addCar(CarInventory car) {
         String id = getId();
         CarInventory obj = inventoryMap.put(id, car);
-        return obj.getInventoryObject();
+        return car.getInventoryObject();
     }
 
     public CarInventory removeCar(CarInventory car) {

@@ -12,5 +12,4 @@ import org.springframework.stereotype.Component;
 public class Inventory<T> {
     String id;
     T inventoryObject;
-
 }

@@ -1,4 +1,3 @@
-
 import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MinimizeIcon from "@mui/icons-material/Minimize";
@@ -14,7 +13,6 @@ import {
   ListItemAvatar,
   Avatar,
   CardActions,
-  Checkbox,
   InputAdornment,
   styled,
   List,
@@ -23,11 +21,19 @@ import {
 } from "@mui/material";
 
 import { Car, CarInventory } from "../model/models";
-import { getCars, putCar , deleteCar, getCarInventory, addCarInventory, deleteCarInventory  } from "../api/service";
+import {
+  getCars,
+  putCar,
+  deleteCar,
+  getCarInventory,
+  addCarInventory,
+  deleteCarInventory,
+} from "../api/service";
 import "./adminUI.css";
-import moment from "moment";
 
-//#require('dotenv').config();
+//require('dotenv').config();
+
+const serviceUrl = `http://localhost:${process.env.REACT_APP_API_PORT}`;
 
 type AppProps = {
   name: string;
@@ -58,8 +64,6 @@ const customStyle = {
 export const AddCarUI = ({ name }: AppProps) => {
   const [cars, setCars] = React.useState<Car[]>([]);
   const [addCarBox, setAddCarBox] = React.useState<boolean>(false);
-
-  const serviceUrl = `${process.env.REACT_APP_DB_URL}`;
 
   React.useEffect(() => {
     getCarsFromDb(serviceUrl);
@@ -139,30 +143,26 @@ export const AddCarView: React.FC<AddCarProps> = ({ onSaveCallbak }) => {
   const [make, setMake] = React.useState<string>("");
   const [model, setModel] = React.useState<string>("");
   const [year, setYear] = React.useState<string>("");
-  
+
   const onMakeChange = (event) => {
     setMake(event.target.value);
   };
 
   const onModelChange = (event) => {
-   setModel(event.target.value);
+    setModel(event.target.value);
   };
 
   const onYearChange = (event) => {
     setYear(event.target.value);
-   };
-
-  const onSaveClick = (event) => {
- 
-      const car: Car = new Car();
-      car.make = make;
-      car.model = model;
-      car.year = year;
-      onSaveCallbak(car);
-    
   };
 
- 
+  const onSaveClick = (event) => {
+    const car: Car = new Car();
+    car.make = make;
+    car.model = model;
+    car.year = year;
+    onSaveCallbak(car);
+  };
 
   return (
     <>
@@ -189,12 +189,12 @@ export const AddCarView: React.FC<AddCarProps> = ({ onSaveCallbak }) => {
               />
             </Item>
             <Item>
-            <Typography variant="h6" component="h6" id="car_model_lable">
+              <Typography variant="h6" component="h6" id="car_model_lable">
                 Model
               </Typography>
             </Item>
             <Item>
-            <TextField
+              <TextField
                 style={{ width: "100%" }}
                 required
                 id="model_field"
@@ -203,12 +203,12 @@ export const AddCarView: React.FC<AddCarProps> = ({ onSaveCallbak }) => {
               />
             </Item>
             <Item>
-            <Typography variant="h6" component="h6" id="car_year_lable">
+              <Typography variant="h6" component="h6" id="car_year_lable">
                 Year
               </Typography>
             </Item>
             <Item>
-            <TextField
+              <TextField
                 style={{ width: "100%" }}
                 required
                 id="year_field"
@@ -221,7 +221,11 @@ export const AddCarView: React.FC<AddCarProps> = ({ onSaveCallbak }) => {
         <CardActions sx={{ display: "grid" }}>
           <Stack spacing={2} direction="row-reverse" alignContent={"right"}>
             <Item>
-              <Button variant="outlined" onClick={onSaveClick} id="car_save_button">
+              <Button
+                variant="outlined"
+                onClick={onSaveClick}
+                id="car_save_button"
+              >
                 Save
               </Button>
             </Item>
@@ -238,7 +242,7 @@ export const CarView: React.FC<CarListProps> = ({ cars, onChangeCallBack }) => {
   const onDeleteClick = (car: Car) => {
     console.log("onDeleteClick - ", car);
 
-    deleteCar(`${process.env.REACT_APP_DB_URL}`, car)
+    deleteCar(serviceUrl, car)
       .then((data) => {
         console.log("response data ", data);
         onChangeCallBack();
@@ -246,7 +250,6 @@ export const CarView: React.FC<CarListProps> = ({ cars, onChangeCallBack }) => {
       .catch(function (error) {
         console.log("error while getting data from server" + error.toString());
       });
-      
   };
 
   return (
@@ -263,17 +266,29 @@ export const CarView: React.FC<CarListProps> = ({ cars, onChangeCallBack }) => {
                         <Item sx={{ minWidth: "sm" }} style={{ width: "80%" }}>
                           <Stack spacing={2}>
                             <Item>
-                              <ListItemText primary={car.make} id={"car_make"+ car.id} />
+                              <ListItemText
+                                primary="Make"
+                                secondary={car.make}
+                                id={"car_make" + car.id}
+                              />
                             </Item>
                             <Item>
-                              <ListItemText primary={car.model} id={"car_model"+ car.id} />
+                              <ListItemText
+                                primary="Model"
+                                secondary={car.model}
+                                id={"car_model" + car.id}
+                             />
                             </Item>
                           </Stack>
                         </Item>
                         <Item style={{ alignItems: "right" }}>
                           <Stack spacing={2} direction="row">
-                          <Item>
-                              <ListItemText primary={car.year} id={"car_year"+ car.id} />
+                            <Item>
+                              <ListItemText
+                                primary="Year"
+                                secondary={car.year}
+                                id={"car_year" + car.id}
+                             />
                             </Item>
                             <Item>
                               <ListItemAvatar>
@@ -300,4 +315,3 @@ export const CarView: React.FC<CarListProps> = ({ cars, onChangeCallBack }) => {
     </>
   );
 };
- 

@@ -35,8 +35,6 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("forward:/login");
         registry.addViewController("/logout.html");
         registry.addViewController("/homepage.html");
-        registry.addViewController("/adminhome.html");
-        registry.addViewController("/userhome.html");
         registry.addViewController("/accessDenied.html");
         registry.addViewController("/invalidSession.html");
     }
@@ -48,7 +46,8 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/", "/resources/");
+        registry.addResourceHandler("/resources/**")
+                .addResourceLocations("/", "/resources/");
     }
 
     @Override
