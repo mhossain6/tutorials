@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class CartRepository {
+
     Map<String, CarInventory> inventoryMap = new HashMap<>();
 
     public String getId() {
@@ -33,8 +34,18 @@ public class CartRepository {
         return obj.getInventoryObject();
     }
 
+    public CarInventory removeCar(CarInventory car) {
+
+        return null;
+    }
+
+    public void checkout() {
+        inventoryMap.clear();
+    }
+
     public CarInventory removeCar(String id) {
         CarInventory obj = inventoryMap.remove(id);
         return obj;
     }
+
 }

@@ -35,6 +35,8 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("forward:/login");
         registry.addViewController("/logout.html");
         registry.addViewController("/homepage.html");
+        registry.addViewController("/accessDenied.html");
+        registry.addViewController("/invalidSession.html");
     }
 
     @Override

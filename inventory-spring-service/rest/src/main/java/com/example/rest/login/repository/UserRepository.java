@@ -1,6 +1,8 @@
 package com.example.rest.login.repository;
 
 import com.example.rest.login.model.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -13,6 +15,14 @@ import java.util.stream.Collectors;
 public class UserRepository {
     Map<String, User> userMap = new HashMap<>();
 
+    PasswordEncoder encoder;
+
+    public UserRepository() {
+        encoder = new BCryptPasswordEncoder(11);
+        userMap.put("user", new User("user", encoder.encode("password"), "USER"));
+        userMap.put("admin", new User("admin", encoder.encode("password"), "ADMIN"));
+    }
+
     public List<User> getUser() {
         Collection<User> users = userMap.values();
         return users.stream().collect(Collectors.toList());
@@ -20,11 +30,6 @@ public class UserRepository {
 
     public User findUser(String username) {
         return userMap.get(username);
-    }
-
-    public UserRepository() {
-        userMap.put("user", new User("user", "password", "USER"));
-        userMap.put("admin", new User("admin", "password", "ADMIN"));
     }
 
     public User addUser(User user) {

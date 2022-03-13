@@ -21,7 +21,7 @@ public class CarService {
         return carRepository.addCar(car);
     }
 
-    public Car removeCar(String carId) {
-        return carRepository.removeCar(carId);
+    public Car removeCar(Car car) {
+        return carRepository.removeCar(car);
     }
 }

@@ -29,15 +29,12 @@ public class MyCustomLoginAuthenticationSuccessHandler implements Authentication
 
         String userName = null;
         if (authentication.getPrincipal() instanceof User) {
-            userName = ((User)authentication.getPrincipal()).getUserName();
-        }
-        else {
+            userName = ((User) authentication.getPrincipal()).getUserName();
+        } else {
             userName = authentication.getName();
         }
 
-        if (userName.compareToIgnoreCase("user") == 0) {
-            redirectStrategy.sendRedirect(request, response, "/homepage.html?user=" + userName);
-        } else {
+        if (userName.length() > 0) {
             redirectStrategy.sendRedirect(request, response, "/homepage.html?user=" + userName);
         }
 

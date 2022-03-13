@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 import java.util.List;
 
+
 @Component
 public class LoggedUser implements HttpSessionBindingListener {
 
@@ -34,8 +35,12 @@ public class LoggedUser implements HttpSessionBindingListener {
     public void valueUnbound(HttpSessionBindingEvent event) {
         List<String> users = activeUserStore.getUsers();
         LoggedUser user = (LoggedUser) event.getValue();
-        if (null != users && user != null )
-        users.remove(user.getUsername());
+        if (null != users && user != null)
+            users.remove(user.getUsername());
+    }
+
+    public List<String> getActiveUsers() {
+        return activeUserStore.getUsers();
     }
 
     public String getUsername() {

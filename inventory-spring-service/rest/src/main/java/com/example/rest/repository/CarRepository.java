@@ -27,8 +27,8 @@ public class CarRepository {
         return cars.values().stream().collect(Collectors.toList());
     }
 
-    public Car removeCar(String carId) {
-        return cars.remove(carId);
+    public Car removeCar(Car car) {
+        return cars.remove(car.getId());
     }
 
     public Car updateCar(Car car) {

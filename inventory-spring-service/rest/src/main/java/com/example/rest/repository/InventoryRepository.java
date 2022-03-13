@@ -25,6 +25,10 @@ public class InventoryRepository {
         return carInventory.stream().collect(Collectors.toList());
     }
 
+    public CarInventory getInventory(String inventoryId) {
+        return inventoryMap.get(inventoryId);
+    }
+
     public Car findCar(String id) {
         CarInventory obj = inventoryMap.get(id);
         return obj.getInventoryObject();
@@ -36,9 +40,9 @@ public class InventoryRepository {
         return obj.getInventoryObject();
     }
 
-    public Car removeCar(String id) {
+    public CarInventory removeCar(String id) {
         CarInventory obj = inventoryMap.remove(id);
-        return obj.getInventoryObject();
+        return obj;
     }
 
 }
