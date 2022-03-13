@@ -6,7 +6,7 @@ const Header: React.FC = (props: any) => {
     <div>
       <Paper>
         <Typography variant="h6" component="h6" align="left">
-          Cars Inventory Management - Admin
+          Cars Inventory Management
         </Typography>
       </Paper>
     </div>
