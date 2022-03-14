@@ -1,5 +1,6 @@
 package com.example.rest.login.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,13 @@ public class ErrorController {
         return "login";
     }
 
+    @Value("${ui.js.server}")
+    private String jsServer;
+
     @GetMapping(value = "/")
     public ModelAndView homepage(final HttpServletRequest request, final ModelMap model) {
-
-        return new ModelAndView("index", model);
+        model.put("jsserver",jsServer);
+        return new ModelAndView("homepage", model);
     }
 
     @GetMapping(value = "/invalidSession")
