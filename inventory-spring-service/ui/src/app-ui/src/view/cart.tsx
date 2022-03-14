@@ -30,6 +30,7 @@ import {
   checkoutCart,
 } from "../api/userservice";
 import "./adminUI.css";
+import { Events, EventEmitter } from "../api/EventEmiter";
 
 //require('dotenv').config();
 
@@ -99,7 +100,7 @@ export const CartInventoryUI = ({ name }: AppProps) => {
       </Stack>
       <Stack spacing={2} direction="column">
         <Item>
-         {addCarBox &&  <AddToCartView onSaveCallbak={onSaveClick} /> }
+          {addCarBox && <AddToCartView onSaveCallbak={onSaveClick} />}
         </Item>
       </Stack>
 
@@ -131,12 +132,13 @@ export const AddToCartView: React.FC<AddToCartProps> = ({ onSaveCallbak }) => {
   };
 
   const onAddClick = (car: CarInventory) => {
-    console.log("onDeleteClick - ", car);
+    console.log("onAddClick - ", car);
 
     addCartoCart(serviceUrl, car)
       .then((data) => {
         console.log("response data ", data);
-        setTimeout ( ()=> getCarsInventoryFromDB(serviceUrl), 200);
+        setTimeout(() => {getCarsInventoryFromDB(serviceUrl); EventEmitter.dispatch(Events.ADD_ITEM_TO_CART, car); } , 200);
+        
       })
       .catch(function (error) {
         console.log("error while getting data from server" + error.toString());
@@ -211,12 +213,18 @@ export const AddToCartView: React.FC<AddToCartProps> = ({ onSaveCallbak }) => {
 };
 
 export const CartView: React.FC<CartListProps> = ({ onChangeCallBack }) => {
-  
   const [cartitems, setCartItems] = React.useState<CarInventory[]>([]);
 
   React.useEffect(() => {
     getCartItemsFromDb(serviceUrl);
   }, []);
+
+  const subMethod = (event) => {
+    console.log("in event subscription");
+    getCartItemsFromDb(serviceUrl);
+  }
+
+  EventEmitter.subscribe(Events.ADD_ITEM_TO_CART, subMethod );
 
   const getCartItemsFromDb = (serviceUrl: string) => {
     getCartItems(serviceUrl)
@@ -234,7 +242,7 @@ export const CartView: React.FC<CartListProps> = ({ onChangeCallBack }) => {
       .then((data) => {
         console.log("response data ", data);
         //getCartItemsFromDb(serviceUrl);
-        setTimeout ( ()=> getCartItemsFromDb(serviceUrl), 200);
+        setTimeout(() => getCartItemsFromDb(serviceUrl), 200);
       })
       .catch(function (error) {
         console.log("error while getting data from server" + error.toString());
