@@ -73,11 +73,11 @@ export const CartInventoryUI = ({ name }: AppProps) => {
 
   const onSaveClick = (car: Car) => {
     console.log("onSaveClick - ", car);
-    setAddCarBox(true);
+    //setAddCarBox(true);
   };
 
   const onChangeCallBack = () => {
-    setAddCarBox(true);
+    //setAddCarBox(true);
   };
 
   return (
@@ -99,13 +99,13 @@ export const CartInventoryUI = ({ name }: AppProps) => {
       </Stack>
       <Stack spacing={2} direction="column">
         <Item>
-          {addCarBox && <AddToCartView onSaveCallbak={onSaveClick} />}
+         {addCarBox &&  <AddToCartView onSaveCallbak={onSaveClick} /> }
         </Item>
       </Stack>
 
       <Stack spacing={2} alignItems="left">
         <Item>
-        { addCarBox &&  <CartView onChangeCallBack={onChangeCallBack} /> } 
+          <CartView onChangeCallBack={onChangeCallBack} />
         </Item>
       </Stack>
     </div>
@@ -136,7 +136,7 @@ export const AddToCartView: React.FC<AddToCartProps> = ({ onSaveCallbak }) => {
     addCartoCart(serviceUrl, car)
       .then((data) => {
         console.log("response data ", data);
-        onSaveCallbak();
+        setTimeout ( ()=> getCarsInventoryFromDB(serviceUrl), 200);
       })
       .catch(function (error) {
         console.log("error while getting data from server" + error.toString());
@@ -211,7 +211,9 @@ export const AddToCartView: React.FC<AddToCartProps> = ({ onSaveCallbak }) => {
 };
 
 export const CartView: React.FC<CartListProps> = ({ onChangeCallBack }) => {
+  
   const [cartitems, setCartItems] = React.useState<CarInventory[]>([]);
+
   React.useEffect(() => {
     getCartItemsFromDb(serviceUrl);
   }, []);
@@ -227,14 +229,12 @@ export const CartView: React.FC<CartListProps> = ({ onChangeCallBack }) => {
       });
   };
 
-  const onDeleteClick = (car: CarInventory) => {
-    console.log("onDeleteClick - ", car);
-
-    deleteCartItem(serviceUrl, car)
+  const onCheckOut = () => {
+    checkoutCart(serviceUrl)
       .then((data) => {
         console.log("response data ", data);
-        getCartItemsFromDb(serviceUrl);
-        onChangeCallBack();
+        //getCartItemsFromDb(serviceUrl);
+        setTimeout ( ()=> getCartItemsFromDb(serviceUrl), 200);
       })
       .catch(function (error) {
         console.log("error while getting data from server" + error.toString());
@@ -282,17 +282,6 @@ export const CartView: React.FC<CartListProps> = ({ onChangeCallBack }) => {
                                 id={"car_year" + car.id}
                               />
                             </Item>
-                            <Item>
-                              <ListItemAvatar>
-                                <Avatar>
-                                  <DeleteIcon
-                                    onClick={(e) => {
-                                      onDeleteClick(car);
-                                    }}
-                                  />
-                                </Avatar>
-                              </ListItemAvatar>
-                            </Item>
                           </Stack>
                         </Item>
                       </Stack>
@@ -303,6 +292,11 @@ export const CartView: React.FC<CartListProps> = ({ onChangeCallBack }) => {
             </List>
           </Stack>
         </CardContent>
+        <CardActions>
+          <Button variant="outlined" onClick={onCheckOut}>
+            CheckOut
+          </Button>
+        </CardActions>
       </Card>
     </>
   );
