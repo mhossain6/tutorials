@@ -99,26 +99,28 @@ export const CartInventoryUI = ({ name }: AppProps) => {
         </Item>
       </Stack>
       <Stack spacing={2} direction="column">
-        <Item>
-          {addCarBox && <AddToCartView onSaveCallbak={onSaveClick} />}
-        </Item>
+        <Item>{addCarBox && <AddToCartView />}</Item>
       </Stack>
 
       <Stack spacing={2} alignItems="left">
         <Item>
-          <CartView onChangeCallBack={onChangeCallBack} />
+          <CartView />
         </Item>
       </Stack>
     </div>
   );
 };
 
-export const AddToCartView: React.FC<AddToCartProps> = ({ onSaveCallbak }) => {
+export const AddToCartView: React.FC<{}> = () => {
   const [carinventory, setCarInventory] = React.useState<CarInventory[]>([]);
 
   React.useEffect(() => {
     getCarsInventoryFromDB(serviceUrl);
   }, []);
+
+  EventEmitter.subscribe(Events.ADD_ITEM_TO_CART, (data) => {
+    getCarsInventoryFromDB(serviceUrl);
+  });
 
   const getCarsInventoryFromDB = (serviceUrl: string) => {
     getCarInventory(serviceUrl)
@@ -137,8 +139,10 @@ export const AddToCartView: React.FC<AddToCartProps> = ({ onSaveCallbak }) => {
     addCartoCart(serviceUrl, car)
       .then((data) => {
         console.log("response data ", data);
-        setTimeout(() => {getCarsInventoryFromDB(serviceUrl); EventEmitter.dispatch(Events.ADD_ITEM_TO_CART, car); } , 200);
-        
+        setTimeout(() => {
+          EventEmitter.dispatch(Events.ADD_ITEM_TO_CART, "some data");
+         
+        }, 200);
       })
       .catch(function (error) {
         console.log("error while getting data from server" + error.toString());
@@ -212,7 +216,7 @@ export const AddToCartView: React.FC<AddToCartProps> = ({ onSaveCallbak }) => {
   );
 };
 
-export const CartView: React.FC<CartListProps> = ({ onChangeCallBack }) => {
+export const CartView: React.FC<{}> = () => {
   const [cartitems, setCartItems] = React.useState<CarInventory[]>([]);
 
   React.useEffect(() => {
@@ -222,9 +226,9 @@ export const CartView: React.FC<CartListProps> = ({ onChangeCallBack }) => {
   const subMethod = (event) => {
     console.log("in event subscription");
     getCartItemsFromDb(serviceUrl);
-  }
+  };
 
-  EventEmitter.subscribe(Events.ADD_ITEM_TO_CART, subMethod );
+  EventEmitter.subscribe(Events.ADD_ITEM_TO_CART, subMethod);
 
   const getCartItemsFromDb = (serviceUrl: string) => {
     getCartItems(serviceUrl)
