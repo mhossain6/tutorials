@@ -21,20 +21,20 @@ public class EmployeeService {
 
     ArrayList<Employee2> employees2 = new ArrayList<>();
 
-    public List<Employee3> getEmployees(){
+    public List<Employee3> getEmployees() {
 
         employees2.add(new Employee2("John", "Accountant"));
         employees2.add(new Employee2("Henry", "Finance"));
 
         ArrayList<Employee> employees = employeeDatabase.getEmployees();
-        Map<String,Employee3> employee3Map = new HashMap<>();
+        Map<String, Employee3> employee3Map = new HashMap<>();
         employees.forEach(employee -> {
             employee3Map.put(employee.getName(), new Employee3(employee.getName(), employee.getSalary(), null));
         });
 
         for (Employee2 employee2 : employees2) {
             Employee3 emp3 = employee3Map.get(employee2.getName());
-            if(null != emp3) {
+            if (null != emp3) {
                 emp3.setDepartment(employee2.getDepartment());
             }
         }
@@ -42,6 +42,7 @@ public class EmployeeService {
         return employee3Map.values().stream().collect(Collectors.toList());
 
     }
+
     private List<Employee> mergeSorted(List<Employee> e1, List<Employee> e2) {
         List<Employee> e3 = new ArrayList<>();
 
@@ -49,12 +50,12 @@ public class EmployeeService {
         int index1 = e1.size();
         int index2 = e2.size();
 
-        int i=0;
+        int i = 0;
         int j = 0;
 
-        while(i < index1 || j < index2){
-            if (i < index1){
-                if(j < index2){
+        while (i < index1 || j < index2) {
+            if (i < index1) {
+                if (j < index2) {
                     Employee emp1 = e1.get(i);
                     Employee emp2 = e2.get(j);
 
@@ -67,15 +68,15 @@ public class EmployeeService {
                     }
 
                 } else {
-                    e3.add( e1.get(i));
+                    e3.add(e1.get(i));
                     ++i;
                 }
 
             } else {
-                e3.add( e2.get(j));
+                e3.add(e2.get(j));
                 ++j;
             }
         }
- return e3;
+        return e3;
     }
 }

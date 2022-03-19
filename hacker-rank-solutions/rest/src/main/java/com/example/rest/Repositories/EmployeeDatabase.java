@@ -18,7 +18,7 @@ public class EmployeeDatabase {
         this.employees = employees;
     }
 
-    public void initDatabase(){
+    public void initDatabase() {
         employees.add(new Employee("John", 10000.0));
         employees.add(new Employee("Henry", 20000.0));
     }

@@ -1,10 +1,8 @@
 package com.example.rest.sample;
 
-import java.nio.charset.StandardCharsets;
-
 public class MaxSubstringlen {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         String s = "abcabcbb";
         System.out.println(geSubStringLen(s));
@@ -17,7 +15,7 @@ public class MaxSubstringlen {
         System.out.println(geSubStringLen(s));
 
 
-       s=  "abccdefghhhgifkle";
+        s = "abccdefghhhgifkle";
         System.out.println(geSubStringLen(s));
     }
 
@@ -37,22 +35,22 @@ public class MaxSubstringlen {
 
 */
 
-    public static int geSubStringLen(String str){
+    public static int geSubStringLen(String str) {
         int maxlen = 0;
         int maxlen1 = 0;
 
-       StringBuffer buff = new StringBuffer();  // 2x
+        StringBuffer buff = new StringBuffer();  // 2x
 
-       char[] chars =  str.toCharArray(); // -- ref
+        char[] chars = str.toCharArray(); // -- ref
 
-        for (int i = 0 ; i < str.length(); i++) {  // n
+        for (int i = 0; i < str.length(); i++) {  // n
 
-            if( hasRepeatChar(buff.toString(), chars[i]) ){  // n
-              // repeat loop from index
+            if (hasRepeatChar(buff.toString(), chars[i])) {  // n
+                // repeat loop from index
                 maxlen = Math.max(maxlen, maxlen1);
                 maxlen1 = 0;
 
-               // buff = new StringBuffer(); //
+                // buff = new StringBuffer(); //
 
             }
 
@@ -61,12 +59,12 @@ public class MaxSubstringlen {
 
         }
 
-       // System.out.println(buff.toString());
+        // System.out.println(buff.toString());
 
         return Math.max(maxlen, maxlen1);
     }
 
-    public static boolean hasRepeatChar(String s, char c){
-       return !(  s.indexOf(c) < 0 );
+    public static boolean hasRepeatChar(String s, char c) {
+        return !(s.indexOf(c) < 0);
     }
 }

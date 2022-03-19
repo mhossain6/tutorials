@@ -17,14 +17,14 @@ public class HackerrankProductOfArray {
 
     private static List<Integer> printOutput(Integer[] nums) {
         List<Integer> op = new ArrayList<>();
-        Integer numZeros[] = new Integer[1];
+        Integer[] numZeros = new Integer[1];
         numZeros[0] = 0;
         Integer prod = getProduct(nums, numZeros);
 
         System.out.println(numZeros);
         // print all zeros
         if (numZeros[0] >= 1) {
-            if (numZeros[0] > 1) return getAllzeroArray(nums.length) ;
+            if (numZeros[0] > 1) return getAllzeroArray(nums.length);
             else {
                 for (int i = 0; i < nums.length; i++) {
                     if (nums[i] == 0)
@@ -45,13 +45,13 @@ public class HackerrankProductOfArray {
 
     private static List<Integer> getAllzeroArray(int length) {
         ArrayList<Integer> ret = new ArrayList<>();
-        for(int i =0 ;i< length;i++) {
-            ret.add(  Integer.valueOf(0));
+        for (int i = 0; i < length; i++) {
+            ret.add(Integer.valueOf(0));
         }
-        return  ret;
+        return ret;
     }
 
-    private static Integer getProduct(Integer[] nums, Integer numZeros[]){
+    private static Integer getProduct(Integer[] nums, Integer[] numZeros) {
 
         Integer prod = 1;
 

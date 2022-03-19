@@ -1,8 +1,10 @@
 package com.example.rest.Entity;
 
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@NoArgsConstructor
 public class Employee2 {
     String name;
     String Department;

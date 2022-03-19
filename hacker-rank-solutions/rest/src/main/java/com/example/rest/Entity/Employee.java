@@ -1,10 +1,12 @@
 package com.example.rest.Entity;
 
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 @Component
+@NoArgsConstructor
 public class Employee implements Comparable<Employee> {
     String name;
     Double salary;
